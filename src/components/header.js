@@ -1,42 +1,46 @@
+import React, { useContext } from "react"
+import {
+  Box,
+  Button,
+  Header,
+  Menu,
+  Nav,
+  ResponsiveContext,
+  Text,
+} from "grommet"
+import { Hpe } from "grommet-icons"
 import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
 
-const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `rebeccapurple`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
-    </div>
-  </header>
-)
+const items = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Prototypes", href: "/prototypes" },
+]
 
-Header.propTypes = {
-  siteTitle: PropTypes.string,
+export const PageHeader = () => {
+  const size = useContext(ResponsiveContext)
+  return (
+    <Header fill="horizontal" pad="medium">
+      <Button plain>
+        <Box direction="row" align="center" gap="medium">
+          <Hpe color="brand" />
+          <Box direction="row" gap="xsmall">
+            <Text weight="bold">HPE</Text>
+            <Text>App Name</Text>
+          </Box>
+        </Box>
+      </Button>
+      {size !== "small" ? (
+        <Nav direction="row">
+          {items.map(item => (
+            <Link to={item.href}>
+              <Button label={item.label} key={item.label} />
+            </Link>
+          ))}
+        </Nav>
+      ) : (
+        <Menu label="Menu" items={items} />
+      )}
+    </Header>
+  )
 }
-
-Header.defaultProps = {
-  siteTitle: ``,
-}
-
-export default Header

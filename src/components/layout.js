@@ -1,51 +1,42 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+import React, { useContext } from "react"
+import { Box, Main, ResponsiveContext } from "grommet"
+import { PageHeader } from "./Header"
+import { PageFooter } from "./Footer"
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
-
-import Header from "./header"
-import "./layout.css"
-
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-
+export const Layout = ({ main }) => {
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <AppContainer>
+      <Box flex overflow="auto">
+        <Box height={{ min: "100%" }} gap="none">
+          <PageHeader></PageHeader>
+          <Main
+            // height is for demonstration of scroll
+            fill={undefined}
+            flex={false}
+            pad={{
+              top: "none",
+              bottom: "small",
+              left: "large",
+              right: "large",
+            }}
+            round="xsmall"
+          >
+            {main}
+          </Main>
+          <PageFooter></PageFooter>
+        </Box>
+      </Box>
+    </AppContainer>
   )
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+const AppContainer = ({ ...rest }) => {
+  const size = useContext(ResponsiveContext)
+  return (
+    <Box
+      direction={size === "small" ? "column-reverse" : "row"}
+      gap={size !== "small" ? "small" : undefined}
+      {...rest}
+    />
+  )
 }
-
-export default Layout
