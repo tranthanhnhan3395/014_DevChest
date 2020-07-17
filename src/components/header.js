@@ -3,33 +3,32 @@ import {
   Box,
   Button,
   Header,
+  Heading,
   Menu,
   Nav,
   ResponsiveContext,
   Text,
 } from "grommet"
-import { Hpe } from "grommet-icons"
 import { Link } from "gatsby"
 
 const items = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Prototypes", href: "/prototypes" },
 ]
 
 export const PageHeader = () => {
   const size = useContext(ResponsiveContext)
   return (
-    <Header fill="horizontal" pad="medium">
-      <Button plain>
-        <Box direction="row" align="center" gap="medium">
-          <Hpe color="brand" />
-          <Box direction="row" gap="xsmall">
-            <Text weight="bold">HPE</Text>
-            <Text>App Name</Text>
-          </Box>
-        </Box>
-      </Button>
+    <Header
+      fill="horizontal"
+      pad={
+        size !== "large" ? "medium" : { vertical: "24px", horizontal: "96px" }
+      }
+    >
+      <Heading size="small" margin="none">
+        DevChest
+      </Heading>
+
       {size !== "small" ? (
         <Nav direction="row">
           {items.map(item => (
