@@ -26,7 +26,7 @@ const IndexMain = () => {
   return (
     <Box alignSelf="center" style={{ width: `1024px` }}>
       <Box
-        direction={size !== "small" ? "row" : "column"}
+        direction={size !== "large" ? "column" : "row"}
         justify="between"
         align="center"
       >
