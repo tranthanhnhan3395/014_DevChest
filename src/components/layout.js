@@ -3,7 +3,7 @@ import { Box, Main, ResponsiveContext } from "grommet"
 import { PageHeader } from "./Header"
 import { PageFooter } from "./Footer"
 
-export const Layout = ({ main }) => {
+export const Layout = ({ main, searchbar }) => {
   return (
     <AppContainer>
       <Box flex overflow="auto">
@@ -14,6 +14,7 @@ export const Layout = ({ main }) => {
           justify="between"
         >
           <PageHeader></PageHeader>
+          {searchbar}
           <Main
             fill={undefined}
             flex={false}
@@ -23,7 +24,6 @@ export const Layout = ({ main }) => {
               left: "large",
               right: "large",
             }}
-            round="xsmall"
           >
             {main}
           </Main>
