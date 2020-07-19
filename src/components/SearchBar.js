@@ -43,7 +43,19 @@ const SearchBarAnchor = styled(Anchor)`
 `
 
 const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState()
+  const [searchType, setSearchType] = useState("creations")
   const [showCreationForm, setShowCreationForm] = useState(false)
+
+  const handleUpdateSearchTerm = event => {
+    setSearchTerm(event.target.value)
+    console.log(`search term is updated to: ${searchTerm}`)
+  }
+
+  const handleUpdateSearchType = ({ option }) => {
+    setSearchType(option)
+    console.log(`search type is updated to: ${searchType}`)
+  }
 
   const handleAddCreationAnchorClick = event => {
     console.log(`handleAddCreationAnchorClick is triggered`)
@@ -63,7 +75,11 @@ const SearchBar = () => {
       align="center"
       justify="center"
     >
-      <SearchBarInput />
+      <SearchBarInput
+        handleUpdateSearchTerm={handleUpdateSearchTerm}
+        searchType={searchType}
+        handleUpdateSearchType={handleUpdateSearchType}
+      />
       <SearchBarAnchor
         href="#"
         color="white"
@@ -83,7 +99,11 @@ const SearchBar = () => {
   )
 }
 
-const SearchBarInput = () => {
+const SearchBarInput = ({
+  handleUpdateSearchTerm,
+  searchType,
+  handleUpdateSearchType,
+}) => {
   const size = useContext(ResponsiveContext)
   return (
     <Box
@@ -100,12 +120,15 @@ const SearchBarInput = () => {
           plain
           options={["creations", "prototypes", "projects"]}
           icon={<Down color="white" size="16px" />}
+          value={searchType}
+          onChange={handleUpdateSearchType}
         />
       </Box>
       <Text color="white">|</Text>
       <SearchBarTextInput
         plain
         placeholder="Search for prototypes or projects"
+        onChange={handleUpdateSearchTerm}
       />
       <Search color="white" />
     </Box>
