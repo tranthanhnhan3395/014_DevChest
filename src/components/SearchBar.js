@@ -9,6 +9,7 @@ import {
   ResponsiveContext,
 } from "grommet"
 import { Search, Add, Down } from "grommet-icons"
+import { CreationForm } from "../components/CreationForm"
 
 const SearchBarBox = styled(Box)`
   background: #8360c3; /* fallback for old browsers */
@@ -42,6 +43,19 @@ const SearchBarAnchor = styled(Anchor)`
 `
 
 const SearchBar = () => {
+  const [showCreationForm, setShowCreationForm] = useState(false)
+
+  const handleAddCreationAnchorClick = event => {
+    console.log(`handleAddCreationAnchorClick is triggered`)
+    event.preventDefault()
+    setShowCreationForm(true)
+  }
+
+  const handleCreationFormOutsideClick = event => {
+    console.log(`handleCreationFormOutsideClick is triggered`)
+    setShowCreationForm(false)
+  }
+
   return (
     <SearchBarBox
       fill="horizontal"
@@ -58,7 +72,13 @@ const SearchBar = () => {
         reverse
         size="medium"
         margin="xsmall"
+        onClick={handleAddCreationAnchorClick}
       />
+      {showCreationForm ? (
+        <CreationForm
+          handleCreationFormOutsideClick={handleCreationFormOutsideClick}
+        />
+      ) : null}
     </SearchBarBox>
   )
 }
